@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SimulatorClient.ViewModel"
+        x:Name="mainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
@@ -12,14 +13,15 @@
             <Setter Property="Height" Value="50"></Setter>
         </Style>
         <local:TeleParameterConverter x:Key="teleParameterConverter" ></local:TeleParameterConverter>
+        <local:WindowViewModel x:Key="dataContext"></local:WindowViewModel>
     </Window.Resources>
 
 
     <Grid>
-        <ItemsControl ItemsSource="{Binding teleParameters}">
+        <ItemsControl ItemsSource="{Binding teleParameters}" x:Name="itemsControl">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button Command="{Binding DataContext.ToggleValueCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}">
+                    <Button Command="{Binding Path=ToggleValueCommandAsync, Source={StaticResource dataContext}}" CommandParameter="{Binding}">
                         <Button.Content>
                             <MultiBinding Converter="{StaticResource teleParameterConverter}">
                                 <Binding Path="Name"></Binding>
