@@ -35,6 +35,19 @@ namespace SimulatorClient.Services
             var jsonResponse = await response.Content.ReadAsStringAsync();
             return jsonResponse;
         }
+
+        public async Task<string> GetAsync(string uri)
+        {
+            HttpResponseMessage response = await _httpClient.GetAsync(uri);
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            return jsonResponse;
+        }
+
+        public async Task<DeserializedClass> GetAsync<DeserializedClass>(string uri)
+        {
+            string jsonResponse = await GetAsync(uri);
+            return JsonSerializer.Deserialize<DeserializedClass>(jsonResponse);
+        }
         public async Task<DeserializedClass> PostAsync<DeserializedClass>(string uri, Object toSend)
         {
             string jsonResponse = await PostAsync(uri, toSend);

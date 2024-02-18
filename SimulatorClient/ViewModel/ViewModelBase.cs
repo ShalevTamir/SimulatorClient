@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SimulatorClient.ViewModel
 {
-    class ViewModelBase : INotifyPropertyChanged
+    public class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -15,5 +15,11 @@ namespace SimulatorClient.ViewModel
             field = newValue;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(properyName));
         }
+
+        protected void RaisePropertyChangedEvent(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
     }
 }

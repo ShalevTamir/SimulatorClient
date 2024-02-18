@@ -8,6 +8,7 @@ using SimulatorClient.Services.Factories;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
@@ -17,31 +18,25 @@ using System.Windows.Input;
 
 namespace SimulatorClient.ViewModel
 {
-    class WindowViewModel: ViewModelBase
+    class WindowViewModel
     {
-        const string SIMULATOR_URL = "https://localhost:5001/simulator";
         public AsyncCommand<TeleParameter> ToggleValueCommandAsync { get; private set; }
         public ObservableCollection<TeleParameter> teleParameters { get; private set; }
         private RequestsService _requestsService;
         private TeleGenerationConditionDtoFactory _teleGenerationConditionDtoFactory;
-
         public WindowViewModel()
         {
-            teleParameters = new ObservableCollection<TeleParameter>()
+            this.teleParameters = new ObservableCollection<TeleParameter>();
+            TeleParameterFactory.Instance.BuildTeleParametersAsync().ContinueWith(async completedTask =>
             {
-                new TeleParameter()
+                foreach (var teleParameter in completedTask.Result)
                 {
-                    Name = "Altitude",
-                    Value = 40000,
-                    Comparison = TeleComparison.BIGGER
-                },
-                new TeleParameter()
-                {
-                    Name = "Longitude",
-                    Value = -50,
-                    Comparison = TeleComparison.SMALLER
+                    await App.Current.Dispatcher.InvokeAsync(() =>
+                    {
+                        this.teleParameters.Add(teleParameter);
+                    });
                 }
-            };
+            });
             _requestsService = new RequestsService();
             _teleGenerationConditionDtoFactory = TeleGenerationConditionDtoFactory.Instance;
             ToggleValueCommandAsync = new AsyncCommand<TeleParameter>(ToggleValue);
@@ -49,25 +44,23 @@ namespace SimulatorClient.ViewModel
 
         private async Task ToggleValue(TeleParameter teleParameter)
         {
-            string res = "";
             try {
-                if (!teleParameter.isConditionActive())
+                if (teleParameter.ConditionActive)
                 {
-                    res = await _requestsService.PostAsync(SIMULATOR_URL + "/apply-condition",
-                        _teleGenerationConditionDtoFactory.FromTeleParameter(teleParameter));
+                    await _requestsService.PostAsync(Constants.SIMULATOR_URL + "/remove-condition",
+                         teleParameter.Name);
                 }
                 else
                 {
-                    res = await _requestsService.PostAsync(SIMULATOR_URL + "/remove-condition",
-                         teleParameter.Name);
+                    await _requestsService.PostAsync(Constants.SIMULATOR_URL + "/apply-condition",
+                        _teleGenerationConditionDtoFactory.FromTeleParameter(teleParameter));
                 }
+                teleParameter.toggleCondition();
             }
             catch (HttpRequestException e)
             {
                 Debug.WriteLine(e.Message);
             }
-            Debug.WriteLine("RESPONSE " + res);
-            teleParameter.toggleCondition();
         }
     }
 }

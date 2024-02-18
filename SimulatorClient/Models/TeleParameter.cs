@@ -1,17 +1,22 @@
 ﻿using SimulatorClient.Models.Dtos;
+using SimulatorClient.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace SimulatorClient.Models
 {
-    public class TeleParameter
+    public class TeleParameter: ViewModelBase
     {
-        public string Name { get; set; }
-        public int Value { get; set; }
-        public TeleComparison Comparison { get; set; }
+        private string _name;
+        private int _value;
+        private TeleComparison _comparison;
         private bool _conditionActive;
-
+        public string Name { get => _name; set => SetProperty(ref _name, value); }
+        public int Value { get => _value; set => SetProperty(ref _value, value); }
+        public TeleComparison Comparison { get => _comparison; set => SetProperty(ref _comparison, value); }
+        public bool ConditionActive { get => _conditionActive; set => SetProperty(ref _conditionActive, value); }
         public TeleParameter()
         {
             this._conditionActive = false;
@@ -19,11 +24,7 @@ namespace SimulatorClient.Models
 
         public void toggleCondition()
         {
-            _conditionActive = !this._conditionActive;
-        }
-        public bool isConditionActive()
-        {
-            return this._conditionActive;
+            ConditionActive = !ConditionActive;
         }
     }
 }

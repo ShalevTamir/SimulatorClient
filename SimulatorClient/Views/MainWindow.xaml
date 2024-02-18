@@ -27,6 +27,7 @@
                                 <Binding Path="Name"></Binding>
                                 <Binding Path="Value"></Binding>
                                 <Binding Path="Comparison"></Binding>
+                                <Binding Path="ConditionActive"></Binding>
                             </MultiBinding>
                         </Button.Content>    
                     </Button>
