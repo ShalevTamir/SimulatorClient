@@ -6,29 +6,66 @@
         xmlns:local="clr-namespace:SimulatorClient.ViewModel"
         x:Name="mainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow"
+        Height="450"
+        Width="800"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Background="Transparent">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Width" Value="Auto"></Setter>
             <Setter Property="Height" Value="50"></Setter>
         </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily"
+                    Value="Assets/Fonts/#Rubik Medium" />
+            <Setter Property="VerticalAlignment"
+                    Value="Center" />
+            <Setter Property="HorizontalAlignment"
+                    Value="Left" />
+            <Setter Property="Foreground"
+                    Value="#DBDBDB" />
+            <Setter Property="FontSize"
+                    Value="18" />
+        </Style>
         <local:TeleParameterConverter x:Key="teleParameterConverter" ></local:TeleParameterConverter>
         <local:WindowViewModel x:Key="dataContext"></local:WindowViewModel>
+       
     </Window.Resources>
 
 
     <Grid>
+        <Border Background="#212529"
+        CornerRadius="20" />
+
+        <TextBlock Text="Simulator Client"></TextBlock>
+
+
         <ItemsControl ItemsSource="{Binding teleParameters}" x:Name="itemsControl">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Button Command="{Binding Path=ToggleValueCommandAsync, Source={StaticResource dataContext}}" CommandParameter="{Binding}">
                         <Button.Content>
-                            <MultiBinding Converter="{StaticResource teleParameterConverter}">
-                                <Binding Path="Name"></Binding>
-                                <Binding Path="Value"></Binding>
-                                <Binding Path="Comparison"></Binding>
-                                <Binding Path="ConditionActive"></Binding>
-                            </MultiBinding>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                            <TextBlock Grid.Column="1" Text="{Binding Name}"></TextBlock>
+                            <Image Grid.Column="2" Width="200">
+                                <Image.Source>
+                                        <BitmapImage DecodePixelWidth="200" UriSource="C:\Users\shale\source\repos\SimulatorClient\SimulatorClient\Assets\Images\up-arrow.png"/>
+                                </Image.Source>
+                            </Image>
+                                <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding ConditionActive}"></TextBlock>
+                            </Grid>
+
                         </Button.Content>    
                     </Button>
                 </DataTemplate>
