@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SimulatorClient.ViewModel"
+        xmlns:models="clr-namespace:SimulatorClient.Models"
         x:Name="mainWindow"
         mc:Ignorable="d"
         Title="MainWindow"
@@ -32,7 +33,8 @@
         </Style>
         <local:TeleParameterConverter x:Key="teleParameterConverter" ></local:TeleParameterConverter>
         <local:WindowViewModel x:Key="dataContext"></local:WindowViewModel>
-       
+        <BitmapImage x:Key="up-arrow-img" UriSource="C:\Users\shale\source\repos\SimulatorClient\SimulatorClient\Assets\Images\up-arrow.png"/>
+        <BitmapImage x:Key="down-arrow-img" UriSource="C:\Users\shale\source\repos\SimulatorClient\SimulatorClient\Assets\Images\down-arrow.png"/>
     </Window.Resources>
 
 
@@ -59,11 +61,18 @@
                                 </Grid.RowDefinitions>
                             <TextBlock Grid.Column="1" Text="{Binding Name}"></TextBlock>
                             <Image Grid.Column="2" Width="200">
-                                <Image.Source>
-                                        <BitmapImage DecodePixelWidth="200" UriSource="C:\Users\shale\source\repos\SimulatorClient\SimulatorClient\Assets\Images\up-arrow.png"/>
-                                </Image.Source>
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Setter Property="Source" Value="{StaticResource up-arrow-img}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Comparison}" Value="{x:Static models:TeleComparison.SMALLER}">
+                                                <Setter Property="Source" Value="{StaticResource down-arrow-img}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
                             </Image>
-                                <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding ConditionActive}"></TextBlock>
+                                <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Comparison}"></TextBlock>
                             </Grid>
 
                         </Button.Content>    
