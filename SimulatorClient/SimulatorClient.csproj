@@ -7,12 +7,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Images\down-arrow.png" />
+    <None Remove="Assets\Images\power-off.png" />
+    <None Remove="Assets\Images\power-on.png" />
+    <None Remove="Assets\Images\up-arrow.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Assets\Fonts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Images\down-arrow.png" />
+    <Resource Include="Assets\Images\power-off.png" />
+    <Resource Include="Assets\Images\power-on.png" />
+    <Resource Include="Assets\Images\up-arrow.png" />
   </ItemGroup>
 
 </Project>
