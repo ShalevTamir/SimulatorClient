@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Fonts\SegMDL2.ttf" />
     <None Remove="Assets\Images\down-arrow.png" />
     <None Remove="Assets\Images\power-off.png" />
     <None Remove="Assets\Images\power-on.png" />
@@ -19,10 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Assets\Fonts\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Resource Include="Assets\Fonts\SegMDL2.ttf" />
     <Resource Include="Assets\Images\down-arrow.png" />
     <Resource Include="Assets\Images\power-off.png" />
     <Resource Include="Assets\Images\power-on.png" />

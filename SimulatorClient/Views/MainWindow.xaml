@@ -13,7 +13,8 @@
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
-        Background="Transparent">
+        Background="Transparent"
+        MouseDown="Window_MouseDown">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Width" Value="Auto"></Setter>
@@ -37,7 +38,8 @@
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Foreground" Value="White" />
-            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="FontFamily" Value="/Assets/Fonts/#Segoe MDL2 Assets" />
         </Style>
         <local:TeleParameterConverter x:Key="teleParameterConverter" ></local:TeleParameterConverter>
         <local:WindowViewModel x:Key="dataContext"></local:WindowViewModel>
@@ -68,11 +70,11 @@
                     HorizontalAlignment="Left"
                     Padding="20,20,0,20"
                     FontSize="45"></TextBlock>
+                    
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-
-                    <Button x:Name="btnMinimize" Content="_" Click="btnMinimize_Click" Style="{StaticResource windowControlButtonStyle}"></Button>
-                    <Button x:Name="btnMaximize" Content="■" Click="btnMaximize_Click" Style="{StaticResource windowControlButtonStyle}"></Button>
-                    <Button x:Name="btnClose" Content="x" Click="btnClose_Click" Style="{StaticResource windowControlButtonStyle}"></Button>
+                    <Button x:Name="btnMinimize" Content="&#xE949;" Click="btnMinimize_Click" Style="{StaticResource windowControlButtonStyle}"></Button>
+                    <Button x:Name="btnMaximize" Content="&#xE739;" Click="btnMaximize_Click" Style="{StaticResource windowControlButtonStyle}"></Button>
+                    <Button x:Name="btnClose" Content="&#xE106;" Click="btnClose_Click" Style="{StaticResource windowControlButtonStyle}"></Button>
                 </StackPanel>
             </Grid>
             
