@@ -42,7 +42,7 @@ namespace SimulatorClient.Services.Factories
                     Name = "Longitude",
                     Value = -10,
                     Comparison = TeleComparison.SMALLER
-                },
+                }
             };
             string[] existingTeleParameters = await _requestsService.GetAsync<string[]>(Constants.SIMULATOR_URL);
             foreach (var parameterName in existingTeleParameters)

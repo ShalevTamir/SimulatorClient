@@ -83,9 +83,10 @@
             <ItemsControl ItemsSource="{Binding teleParameters}" x:Name="itemsControl" Grid.Row="1">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"/>
+                        <WrapPanel Orientation="Horizontal" ></WrapPanel>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
+                
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                             <Button 
