@@ -9,6 +9,7 @@
   <ItemGroup>
     <None Remove="Assets\Fonts\SegMDL2.ttf" />
     <None Remove="Assets\Images\down-arrow.png" />
+    <None Remove="Assets\Images\plus.png" />
     <None Remove="Assets\Images\power-off.png" />
     <None Remove="Assets\Images\power-on.png" />
     <None Remove="Assets\Images\up-arrow.png" />
@@ -22,6 +23,7 @@
   <ItemGroup>
     <Resource Include="Assets\Fonts\SegMDL2.ttf" />
     <Resource Include="Assets\Images\down-arrow.png" />
+    <Resource Include="Assets\Images\plus.png" />
     <Resource Include="Assets\Images\power-off.png" />
     <Resource Include="Assets\Images\power-on.png" />
     <Resource Include="Assets\Images\up-arrow.png" />

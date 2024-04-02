@@ -47,6 +47,7 @@
         <BitmapImage x:Key="down-arrow-img" UriSource="/Assets/Images/down-arrow.png"/>
         <BitmapImage x:Key="power-off-img" UriSource="/Assets/Images/power-off.png"/>
         <BitmapImage x:Key="power-on-img" UriSource="/Assets/Images/power-on.png"/>
+        <BitmapImage x:Key="plus-img" UriSource="/Assets/Images/plus.png"/>
     </Window.Resources>
 
     <Border Background="#212529"
@@ -64,21 +65,45 @@
             </Grid.ColumnDefinitions>
             
             <Grid Grid.Row="0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
                 
+                <Button 
+                    Width="50"
+                    Height="50"
+                    BorderThickness="0"
+                    Background="Transparent"
+                    Grid.Column="0"
+                    Margin="10,0,0,0"
+                    Click="AddTeleParameterClick">
+                    <Image Source="{StaticResource plus-img}"></Image>
+                    
+                </Button>
+
                 <TextBlock
                     Text="Simulator Client"
                     HorizontalAlignment="Left"
                     Padding="20,20,0,20"
-                    FontSize="45"></TextBlock>
-                    
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-                    <Button x:Name="btnMinimize" Content="&#xE949;" Click="btnMinimize_Click" Style="{StaticResource windowControlButtonStyle}"></Button>
-                    <Button x:Name="btnMaximize" Content="&#xE739;" Click="btnMaximize_Click" Style="{StaticResource windowControlButtonStyle}"></Button>
-                    <Button x:Name="btnClose" Content="&#xE106;" Click="btnClose_Click" Style="{StaticResource windowControlButtonStyle}"></Button>
+                    FontSize="45"
+                    Grid.Column="1"></TextBlock>
+
+
+                <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                <Button x:Name="btnMinimize" Content="&#xE949;" Click="btnMinimize_Click" Style="{StaticResource windowControlButtonStyle}"></Button>
+                <Button x:Name="btnMaximize" Content="&#xE739;" Click="btnMaximize_Click" Style="{StaticResource windowControlButtonStyle}"></Button>
+                <Button x:Name="btnClose" Content="&#xE106;" Click="btnClose_Click" Style="{StaticResource windowControlButtonStyle}"></Button>
                 </StackPanel>
             </Grid>
             
-
+                
 
             <ItemsControl ItemsSource="{Binding teleParameters}" x:Name="itemsControl" Grid.Row="1">
                 <ItemsControl.ItemsPanel>

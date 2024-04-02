@@ -1,4 +1,6 @@
-﻿using SimulatorClient.ViewModel;
+﻿using SimulatorClient.Services;
+using SimulatorClient.ViewModel;
+using SimulatorClient.Views;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -22,8 +24,10 @@ namespace SimulatorClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        private PopupWindowsService _popupWindowService;
         public MainWindow()
         {
+            _popupWindowService = PopupWindowsService.Instance;
             WindowViewModel viewModel = new WindowViewModel();
             this.DataContext = viewModel;
             InitializeComponent();
@@ -48,6 +52,11 @@ namespace SimulatorClient
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
+        }
+
+        private void AddTeleParameterClick(object sender, RoutedEventArgs e)
+        {
+            _popupWindowService.PopupWindow<AddParameterWindow>();
         }
     }
 }
