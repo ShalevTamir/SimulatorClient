@@ -11,6 +11,7 @@ namespace SimulatorClient.Services.Factories
     internal class TeleParameterFactory
     {
         private static TeleParameterFactory _instance;
+        private string[] existingTeleParameters;
         public static TeleParameterFactory Instance
         {
             get
@@ -25,6 +26,7 @@ namespace SimulatorClient.Services.Factories
         public TeleParameterFactory()
         {
             _requestsService = RequestsService.Instance;
+            GetExistingTeleParameters();
         }
 
         public async Task<ObservableCollection<TeleParameter>> BuildTeleParametersAsync()
@@ -44,17 +46,29 @@ namespace SimulatorClient.Services.Factories
                     Comparison = TeleComparison.SMALLER
                 }
             };
-            string[] existingTeleParameters = await _requestsService.GetAsync<string[]>(Constants.SIMULATOR_URL);
-            foreach (var parameterName in existingTeleParameters)
+
+            await Task.WhenAll(teleParameters.Select(AddTeleParameter));
+            return teleParameters;
+        }
+
+        private async Task AddTeleParameter(TeleParameter teleParameter)
+        {
+            if (this.existingTeleParameters == default)
             {
-                var filteredParameters = teleParameters.Where((parameter) => parameter.Name == parameterName);
-                if(filteredParameters.Any())
+                await GetExistingTeleParameters();
+            }
+            foreach (var parameterName in this.existingTeleParameters)
+            {
+                if (parameterName.Equals(teleParameter.Name))
                 {
-                    filteredParameters.First().ConditionActive = true;
+                    teleParameter.ConditionActive = true;
                 }
             }
-            return teleParameters;
+        }
 
+        private async Task GetExistingTeleParameters()
+        {
+            this.existingTeleParameters = await _requestsService.GetAsync<string[]>(Constants.SIMULATOR_URL);
         }
     }
 }
