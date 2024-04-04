@@ -25,9 +25,11 @@ namespace SimulatorClient
     public partial class MainWindow : Window
     {
         private PopupWindowsService _popupWindowService;
+        private WindowControlsService _windowControlsService;
         public MainWindow()
         {
             _popupWindowService = PopupWindowsService.Instance;
+            _windowControlsService = WindowControlsService.Instance;
             WindowViewModel viewModel = new WindowViewModel();
             this.DataContext = viewModel;
             InitializeComponent();
@@ -35,12 +37,12 @@ namespace SimulatorClient
 
         private void btnMinimize_Click(object sender, RoutedEventArgs e)
         {
-            WindowState = WindowState.Minimized;
+            _windowControlsService.Minimize(this);
         }
 
         private void btnMaximize_Click(object sender, RoutedEventArgs e)
         {
-            WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+            _windowControlsService.Maximize(this);
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
