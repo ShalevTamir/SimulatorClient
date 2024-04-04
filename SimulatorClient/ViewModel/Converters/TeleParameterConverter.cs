@@ -22,11 +22,11 @@ namespace SimulatorClient.ViewModel
             return null;
         }
 
-        private TeleParameter BuildTeleParameter(object[] values)
+        private TeleConstraint BuildTeleParameter(object[] values)
         {
             try
             {
-                var teleParameter = new TeleParameter()
+                var teleParameter = new TeleConstraint()
                 {
                     Name = (string)values[0],
                     Value = (int)values[1],

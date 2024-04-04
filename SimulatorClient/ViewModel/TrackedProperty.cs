@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SimulatorClient.ViewModel
 {
-    public class ViewModelBase : INotifyPropertyChanged
+    public class TrackedProperty : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

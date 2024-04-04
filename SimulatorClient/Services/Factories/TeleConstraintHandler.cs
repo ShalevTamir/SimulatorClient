@@ -8,38 +8,38 @@ using System.Threading.Tasks;
 
 namespace SimulatorClient.Services.Factories
 {
-    internal class TeleParameterFactory
+    internal class TeleConstraintHandler
     {
-        private static TeleParameterFactory _instance;
+        private static TeleConstraintHandler _instance;
         private string[] existingTeleParameters;
-        public static TeleParameterFactory Instance
+        public static TeleConstraintHandler Instance
         {
             get
             {
-                _instance ??= new TeleParameterFactory();
+                _instance ??= new TeleConstraintHandler();
                 return _instance;
             }
             set { }
         }
 
         private RequestsService _requestsService;
-        public TeleParameterFactory()
+        public TeleConstraintHandler()
         {
             _requestsService = RequestsService.Instance;
             GetExistingTeleParameters();
         }
 
-        public async Task<ObservableCollection<TeleParameter>> BuildTeleParametersAsync()
+        public async Task<ObservableCollection<TeleConstraint>> AddDefaultConstraints()
         {
-            var teleParameters = new ObservableCollection<TeleParameter>()
+            var teleParameters = new ObservableCollection<TeleConstraint>()
             {
-                new TeleParameter()
+                new TeleConstraint()
                 {
                     Name = "Altitude",
                     Value = 40000,
                     Comparison = TeleComparison.BIGGER
                 },
-                new TeleParameter()
+                new TeleConstraint()
                 {
                     Name = "Longitude",
                     Value = -10,
@@ -47,11 +47,11 @@ namespace SimulatorClient.Services.Factories
                 }
             };
 
-            await Task.WhenAll(teleParameters.Select(AddTeleParameter));
+            await Task.WhenAll(teleParameters.Select(AddTeleConstraintAsync));
             return teleParameters;
         }
 
-        private async Task AddTeleParameter(TeleParameter teleParameter)
+        public async Task AddTeleConstraintAsync(TeleConstraint teleParameter)
         {
             if (this.existingTeleParameters == default)
             {

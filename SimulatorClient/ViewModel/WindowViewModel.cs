@@ -1,4 +1,5 @@
 ﻿using MvvmHelpers.Commands;
+using MvvmHelpers.Interfaces;
 using Newtonsoft.Json;
 using SimulatorClient.Commands;
 using SimulatorClient.Models;
@@ -14,35 +15,36 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace SimulatorClient.ViewModel
 {
     class WindowViewModel
     {
-        public AsyncCommand<TeleParameter> ToggleValueCommandAsync { get; private set; }
-        public ObservableCollection<TeleParameter> teleParameters { get; private set; }
+        public IAsyncCommand<TeleConstraint> ToggleValueCommandAsync { get; private set; }
+        public ObservableCollection<TeleConstraint> TeleConstraints { get; private set; }
         private RequestsService _requestsService;
         private TeleGenerationConditionDtoFactory _teleGenerationConditionDtoFactory;
         public WindowViewModel()
         {
-            this.teleParameters = new ObservableCollection<TeleParameter>();
-            TeleParameterFactory.Instance.BuildTeleParametersAsync().ContinueWith(async completedTask =>
+            TeleConstraints = [];
+            TeleConstraintHandler.Instance.AddDefaultConstraints().ContinueWith(async completedTask =>
             {
                 foreach (var teleParameter in completedTask.Result)
                 {
-                    await App.Current.Dispatcher.InvokeAsync(() =>
+                    await Application.Current.Dispatcher.InvokeAsync(() =>
                     {
-                        this.teleParameters.Add(teleParameter);
+                        TeleConstraints.Add(teleParameter);
                     });
                 }
             });
             _requestsService = new RequestsService();
             _teleGenerationConditionDtoFactory = TeleGenerationConditionDtoFactory.Instance;
-            ToggleValueCommandAsync = new AsyncCommand<TeleParameter>(ToggleValue);
+            ToggleValueCommandAsync = new AsyncCommand<TeleConstraint>(ToggleValue);
         }
 
-        private async Task ToggleValue(TeleParameter teleParameter)
+        private async Task ToggleValue(TeleConstraint teleParameter)
         {
             try {
                 if (teleParameter.ConditionActive)

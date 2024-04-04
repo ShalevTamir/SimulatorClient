@@ -58,7 +58,7 @@ namespace SimulatorClient
 
         private void AddTeleParameterClick(object sender, RoutedEventArgs e)
         {
-            _popupWindowService.PopupWindow<AddParameterWindow>();
+            _popupWindowService.PopupWindow<AddConstraintWindow>();
         }
     }
 }

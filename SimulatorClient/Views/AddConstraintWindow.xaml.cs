@@ -1,4 +1,5 @@
 ﻿using SimulatorClient.Services;
+using SimulatorClient.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,14 +17,16 @@ using System.Windows.Shapes;
 namespace SimulatorClient.Views
 {
     /// <summary>
-    /// Interaction logic for AddParameterWindow.xaml
+    /// Interaction logic for AddConstraintWindow.xaml
     /// </summary>
-    public partial class AddParameterWindow : Window
+    public partial class AddConstraintWindow : Window
     {
         WindowControlsService _windowControlsService;
-        public AddParameterWindow()
+        public AddConstraintWindow()
         {
             _windowControlsService = WindowControlsService.Instance;
+            AddConstraintVIewModel viewModel = new AddConstraintVIewModel();
+            DataContext = viewModel;
             InitializeComponent();
         }
 
@@ -40,6 +43,11 @@ namespace SimulatorClient.Views
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             _windowControlsService.Close(this);
+        }
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
         }
     }
 }

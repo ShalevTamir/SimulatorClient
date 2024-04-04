@@ -18,7 +18,7 @@ namespace SimulatorClient.Services.Factories
             }
             private set { }
         }
-        public TeleGenerationConditionDto FromTeleParameter(TeleParameter teleParameter)
+        public TeleGenerationConditionDto FromTeleParameter(TeleConstraint teleParameter)
         {
             int? minValue = null, maxValue = null;
             if (teleParameter.Comparison == TeleComparison.BIGGER)
