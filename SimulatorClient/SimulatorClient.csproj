@@ -7,12 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Fonts\Montserrat-VariableFont_wght.ttf" />
+    <None Remove="Assets\Fonts\Rubik-Medium.ttf" />
     <None Remove="Assets\Fonts\SegMDL2.ttf" />
+    <None Remove="Assets\Images\constraint.png" />
     <None Remove="Assets\Images\down-arrow.png" />
+    <None Remove="Assets\Images\plane.png" />
     <None Remove="Assets\Images\plus.png" />
     <None Remove="Assets\Images\power-off.png" />
     <None Remove="Assets\Images\power-on.png" />
     <None Remove="Assets\Images\up-arrow.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Images\constraint.png" />
+    <Resource Include="Assets\Images\plane.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +30,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\Fonts\Montserrat-VariableFont_wght.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\Rubik-Medium.ttf" />
     <Resource Include="Assets\Fonts\SegMDL2.ttf" />
     <Resource Include="Assets\Images\down-arrow.png" />
     <Resource Include="Assets\Images\plus.png" />
