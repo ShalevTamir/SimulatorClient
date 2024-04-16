@@ -97,7 +97,7 @@
 
 
 
-            <ItemsControl ItemsSource="{Binding TeleConstraints}" x:Name="itemsControl" Grid.Row="1">
+            <ItemsControl ItemsSource="{Binding TeleConstraintHandler.TeleConstraints}" x:Name="itemsControl" Grid.Row="1">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel Orientation="Horizontal" ></WrapPanel>

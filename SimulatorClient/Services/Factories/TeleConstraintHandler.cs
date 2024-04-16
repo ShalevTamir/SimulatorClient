@@ -2,15 +2,18 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SimulatorClient.Services.Factories
 {
     internal class TeleConstraintHandler
     {
         private static TeleConstraintHandler _instance;
+        public ObservableCollection<TeleConstraint> TeleConstraints { get; private set; }
         private string[] existingTeleParameters;
         public static TeleConstraintHandler Instance
         {
@@ -23,15 +26,17 @@ namespace SimulatorClient.Services.Factories
         }
 
         private RequestsService _requestsService;
-        public TeleConstraintHandler()
+        private TeleConstraintHandler()
         {
+            TeleConstraints = [];
             _requestsService = RequestsService.Instance;
             GetExistingTeleParameters();
+            AddDefaultConstraintsAsync();
         }
 
-        public async Task<ObservableCollection<TeleConstraint>> AddDefaultConstraints()
+        public async Task AddDefaultConstraintsAsync()
         {
-            var teleParameters = new ObservableCollection<TeleConstraint>()
+            var teleConstraints = new ObservableCollection<TeleConstraint>()
             {
                 new TeleConstraint()
                 {
@@ -47,11 +52,10 @@ namespace SimulatorClient.Services.Factories
                 }
             };
 
-            await Task.WhenAll(teleParameters.Select(AddTeleConstraintAsync));
-            return teleParameters;
+            await Task.WhenAll(teleConstraints.Select(AddTeleConstraintAsync));
         }
 
-        public async Task AddTeleConstraintAsync(TeleConstraint teleParameter)
+        public async Task SyncTeleConstraint(TeleConstraint teleParameter)
         {
             if (this.existingTeleParameters == default)
             {
@@ -64,6 +68,15 @@ namespace SimulatorClient.Services.Factories
                     teleParameter.ConditionActive = true;
                 }
             }
+        }
+
+        public async Task AddTeleConstraintAsync(TeleConstraint teleConstraint)
+        {
+            await SyncTeleConstraint(teleConstraint);
+            await Application.Current.Dispatcher.InvokeAsync(() =>
+            {
+                TeleConstraints.Add(teleConstraint);
+            });
         }
 
         private async Task GetExistingTeleParameters()

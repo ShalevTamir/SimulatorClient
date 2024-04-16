@@ -26,11 +26,15 @@ namespace SimulatorClient.Services
         {
             windowInstances = new List<Window>();
         }
+        public Window? GetWindow<WindowType>() where WindowType : Window
+        {
+            return FindWindow<WindowType>();
+        }
 
         public void PopupWindow<WindowType>() where WindowType : Window, new()
         {
-            var windowInstance = windowInstances.Find(window => window is WindowType);
-            if (windowInstance == null || !windowInstance.IsLoaded)
+            var windowInstance = FindWindow<WindowType>();
+            if (windowInstance is null || !windowInstance.IsLoaded)
             {
                 windowInstances.Remove(windowInstance);
                 windowInstance = new WindowType();
@@ -46,6 +50,12 @@ namespace SimulatorClient.Services
             {
                 windowInstance.Focus();
             }
+        }
+
+        private Window? FindWindow<WindowType>() where WindowType : Window
+        {
+            var windowInstance = windowInstances.Find(window => window is WindowType);
+            return windowInstance;
         }
     }
 }

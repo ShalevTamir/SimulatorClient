@@ -23,25 +23,15 @@ namespace SimulatorClient.ViewModel
     class WindowViewModel
     {
         public IAsyncCommand<TeleConstraint> ToggleValueCommandAsync { get; private set; }
-        public ObservableCollection<TeleConstraint> TeleConstraints { get; private set; }
+        public TeleConstraintHandler TeleConstraintHandler { get; private set; }
         private RequestsService _requestsService;
         private TeleGenerationConditionDtoFactory _teleGenerationConditionDtoFactory;
         public WindowViewModel()
         {
-            TeleConstraints = [];
-            TeleConstraintHandler.Instance.AddDefaultConstraints().ContinueWith(async completedTask =>
-            {
-                foreach (var teleParameter in completedTask.Result)
-                {
-                    await Application.Current.Dispatcher.InvokeAsync(() =>
-                    {
-                        TeleConstraints.Add(teleParameter);
-                    });
-                }
-            });
+            TeleConstraintHandler = TeleConstraintHandler.Instance;
             _requestsService = new RequestsService();
             _teleGenerationConditionDtoFactory = TeleGenerationConditionDtoFactory.Instance;
-            ToggleValueCommandAsync = new AsyncCommand<TeleConstraint>(ToggleValue);
+            ToggleValueCommandAsync = new AsyncCommand<TeleConstraint>(ToggleValue);            
         }
 
         private async Task ToggleValue(TeleConstraint teleParameter)

@@ -19,6 +19,7 @@ namespace SimulatorClient.Models
         public bool ConditionActive { get => _conditionActive; set => SetProperty(ref _conditionActive, value); }
         public TeleConstraint()
         {
+            Name = "Parameter Name";
             this._conditionActive = false;
         }
 
