@@ -27,6 +27,7 @@ namespace SimulatorClient.Services.Factories
                 maxValue = teleParameter.Value;
             return new TeleGenerationConditionDto()
             {
+                ID = teleParameter.ID,
                 Name = teleParameter.Name,
                 BottomRestriction = minValue,
                 TopRestriction = maxValue,

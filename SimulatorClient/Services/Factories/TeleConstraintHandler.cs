@@ -14,7 +14,7 @@ namespace SimulatorClient.Services.Factories
     {
         private static TeleConstraintHandler _instance;
         public ObservableCollection<TeleConstraint> TeleConstraints { get; private set; }
-        private string[] existingTeleParameters;
+        private int[] existingTeleParametersIds;
         public static TeleConstraintHandler Instance
         {
             get
@@ -57,13 +57,13 @@ namespace SimulatorClient.Services.Factories
 
         public async Task SyncTeleConstraint(TeleConstraint teleParameter)
         {
-            if (this.existingTeleParameters == default)
+            if (this.existingTeleParametersIds == default)
             {
                 await GetExistingTeleParameters();
             }
-            foreach (var parameterName in this.existingTeleParameters)
+            foreach (var parameterId in this.existingTeleParametersIds)
             {
-                if (parameterName.Equals(teleParameter.Name))
+                if (parameterId == teleParameter.ID)
                 {
                     teleParameter.ConditionActive = true;
                 }
@@ -75,13 +75,15 @@ namespace SimulatorClient.Services.Factories
             await SyncTeleConstraint(teleConstraint);
             await Application.Current.Dispatcher.InvokeAsync(() =>
             {
+                teleConstraint.ID = TeleConstraints.Count();
+                Debug.WriteLine(TeleConstraints.Count());
                 TeleConstraints.Add(teleConstraint);
             });
         }
 
         private async Task GetExistingTeleParameters()
         {
-            this.existingTeleParameters = await _requestsService.GetAsync<string[]>(Constants.SIMULATOR_URL);
+            this.existingTeleParametersIds = await _requestsService.GetAsync<int[]>(Constants.SIMULATOR_URL);
         }
     }
 }

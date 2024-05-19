@@ -39,11 +39,15 @@ namespace SimulatorClient.ViewModel
             try {
                 if (teleParameter.ConditionActive)
                 {
+
+                    Debug.WriteLine(teleParameter.Name + " " + teleParameter.Value);
                     await _requestsService.PostAsync(Constants.SIMULATOR_URL + "/remove-condition",
-                         teleParameter.Name);
+                         teleParameter.ID);
                 }
                 else
                 {
+                    Debug.WriteLine(teleParameter.Name + " " + teleParameter.Value);
+
                     await _requestsService.PostAsync(Constants.SIMULATOR_URL + "/apply-condition",
                         _teleGenerationConditionDtoFactory.FromTeleParameter(teleParameter));
                 }
