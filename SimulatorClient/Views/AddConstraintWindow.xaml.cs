@@ -1,9 +1,7 @@
 ﻿using SimulatorClient.Services;
 using SimulatorClient.ViewModel;
-using SimulatorClient.Views;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,24 +12,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SimulatorClient
+namespace SimulatorClient.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for AddConstraintWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class AddConstraintWindow : Window
     {
-        private PopupWindowsService _popupWindowService;
-        private WindowControlsService _windowControlsService;
-        public MainWindow()
+        WindowControlsService _windowControlsService;
+        public AddConstraintWindow()
         {
-            _popupWindowService = PopupWindowsService.Instance;
             _windowControlsService = WindowControlsService.Instance;
-            WindowViewModel viewModel = new WindowViewModel();
-            this.DataContext = viewModel;
+            AddConstraintVIewModel viewModel = new AddConstraintVIewModel();
+            DataContext = viewModel;
             InitializeComponent();
         }
 
@@ -47,18 +42,12 @@ namespace SimulatorClient
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            _windowControlsService.Close(this);
         }
-
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
-        }
-
-        private void AddTeleParameterClick(object sender, RoutedEventArgs e)
-        {
-            _popupWindowService.PopupWindow<AddConstraintWindow>();
         }
     }
 }

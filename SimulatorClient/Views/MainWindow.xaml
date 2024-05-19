@@ -32,21 +32,14 @@
             <Setter Property="FontSize"
                     Value="18" />
         </Style>
-        <Style TargetType="Button" x:Key="windowControlButtonStyle">
-            <Setter Property="Width" Value="40" />
-            <Setter Property="Height" Value="40" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="FontSize" Value="10" />
-            <Setter Property="FontFamily" Value="/Assets/Fonts/#Segoe MDL2 Assets" />
-        </Style>
+        
         <local:TeleParameterConverter x:Key="teleParameterConverter" ></local:TeleParameterConverter>
         <local:WindowViewModel x:Key="dataContext"></local:WindowViewModel>
         <BitmapImage x:Key="up-arrow-img" UriSource="/Assets/Images/up-arrow.png"/>
         <BitmapImage x:Key="down-arrow-img" UriSource="/Assets/Images/down-arrow.png"/>
         <BitmapImage x:Key="power-off-img" UriSource="/Assets/Images/power-off.png"/>
         <BitmapImage x:Key="power-on-img" UriSource="/Assets/Images/power-on.png"/>
+        <BitmapImage x:Key="plus-img" UriSource="/Assets/Images/plus.png"/>
     </Window.Resources>
 
     <Border Background="#212529"
@@ -64,86 +57,111 @@
             </Grid.ColumnDefinitions>
             
             <Grid Grid.Row="0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
                 
+                <Button 
+                    Width="50"
+                    Height="50"
+                    BorderThickness="0"
+                    Background="Transparent"
+                    Grid.Column="0"
+                    Margin="10,0,0,0"
+                    Click="AddTeleParameterClick">
+                    <Image Source="{StaticResource plus-img}"></Image>
+                    
+                </Button>
+
                 <TextBlock
                     Text="Simulator Client"
                     HorizontalAlignment="Left"
                     Padding="20,20,0,20"
-                    FontSize="45"></TextBlock>
-                    
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-                    <Button x:Name="btnMinimize" Content="&#xE949;" Click="btnMinimize_Click" Style="{StaticResource windowControlButtonStyle}"></Button>
-                    <Button x:Name="btnMaximize" Content="&#xE739;" Click="btnMaximize_Click" Style="{StaticResource windowControlButtonStyle}"></Button>
-                    <Button x:Name="btnClose" Content="&#xE106;" Click="btnClose_Click" Style="{StaticResource windowControlButtonStyle}"></Button>
+                    FontSize="45"
+                    Grid.Column="1"></TextBlock>
+
+
+                <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                <Button x:Name="btnMinimize" Content="&#xE949;" Click="btnMinimize_Click" Style="{StaticResource windowControlButtonStyle}"></Button>
+                <Button x:Name="btnMaximize" Content="&#xE739;" Click="btnMaximize_Click" Style="{StaticResource windowControlButtonStyle}"></Button>
+                <Button x:Name="btnClose" Content="&#xE106;" Click="btnClose_Click" Style="{StaticResource windowControlButtonStyle}"></Button>
                 </StackPanel>
             </Grid>
-            
 
 
-            <ItemsControl ItemsSource="{Binding teleParameters}" x:Name="itemsControl" Grid.Row="1">
+
+            <ItemsControl ItemsSource="{Binding TeleConstraintHandler.TeleConstraints}" x:Name="itemsControl" Grid.Row="1">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel Orientation="Horizontal" ></WrapPanel>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
-                
+
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                            <Button 
+                        <Button 
                                 Command="{Binding Path=ToggleValueCommandAsync, Source={StaticResource dataContext}}"
                                 CommandParameter="{Binding}"
                                 Width="300"
                                 Margin="20,0,20,20"
                                 Height="150">
-                                <Button.Style>
-                                    <Style TargetType="Button">
+                            <Button.Style>
+                                <Style TargetType="Button">
                                     <Setter Property="Background" Value="#323538" />
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type Button}">
-                                                    <Border x:Name="bg"
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type Button}">
+                                                <Border x:Name="bg"
                                                             Background="{TemplateBinding Background}"
                                                             BorderThickness="0"
                                                             CornerRadius="20">
-                                                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                                                                           VerticalAlignment="{TemplateBinding VerticalAlignment}" />
-                                                    </Border>
-                                                    <ControlTemplate.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
                                                         <Setter Property="Background" Value="#4f5459" />
-                                                        </Trigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </Button.Style>
-                                
-                                <Button.Content>
-                                    <Grid Width="300" Height="150">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="auto"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto"></RowDefinition>
-                                            <RowDefinition Height="*"></RowDefinition>
-                                        </Grid.RowDefinitions>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Button.Style>
 
-                                        <Image Width="40" Grid.Row="0" Grid.Column="0" Margin="10,10,0,10" HorizontalAlignment="Left">
-                                            <Image.Style>
-                                                <Style TargetType="Image">
-                                                    <Setter Property="Source" Value="{StaticResource up-arrow-img}" />
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding Comparison}" Value="{x:Static models:TeleComparison.SMALLER}">
-                                                            <Setter Property="Source" Value="{StaticResource down-arrow-img}" />
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Image.Style>
-                                        </Image>
-                                        <TextBlock
+                            <Button.Content>
+                                
+                                <Grid Width="300" Height="150">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+
+                                    <Image Width="40" Grid.Row="0" Grid.Column="0" Margin="10,10,0,10" HorizontalAlignment="Left">
+                                        <Image.Style>
+                                            <Style TargetType="Image">
+                                                <Setter Property="Source" Value="{StaticResource up-arrow-img}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Comparison}" Value="{x:Static models:TeleComparison.SMALLER}">
+                                                        <Setter Property="Source" Value="{StaticResource down-arrow-img}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                    <TextBlock
                                             Text="{Binding Name}"
                                             FontSize="30"
                                             HorizontalAlignment="Center"
@@ -151,26 +169,26 @@
                                             Foreground="#b3b3b3"
                                             Grid.Row="0" Grid.Column="1"
                                             FontFamily="Georgia">
-                                        </TextBlock>
-                                        <Image
+                                    </TextBlock>
+                                    <Image
                                             Grid.Column="2"
                                             Grid.Row="0"
                                             Width="40"
                                             HorizontalAlignment="Right"
                                             VerticalAlignment="Top"
                                             Margin="0,10,10,0">
-                                            <Image.Style>
-                                                <Style TargetType="Image">
-                                                    <Setter Property="Source" Value="{StaticResource power-on-img}" />
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding ConditionActive}" Value="False">
-                                                            <Setter Property="Source" Value="{StaticResource power-off-img}" />
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Image.Style>
-                                        </Image>
-                                        <TextBlock
+                                        <Image.Style>
+                                            <Style TargetType="Image">
+                                                <Setter Property="Source" Value="{StaticResource power-on-img}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ConditionActive}" Value="False">
+                                                        <Setter Property="Source" Value="{StaticResource power-off-img}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                    <TextBlock
                                             Text="{Binding Value}"
                                             FontSize="40"
                                             HorizontalAlignment="Center"
@@ -181,13 +199,14 @@
                                             Grid.ColumnSpan="3"
                                             Margin="0,0,0,30"
                                             FontFamily="Browallia New">
-                                        </TextBlock>
-                                        
+                                    </TextBlock>
+                                    
 
-                                    </Grid>
 
-                                </Button.Content>
-                            </Button>
+                                </Grid>
+
+                            </Button.Content>
+                        </Button>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace SimulatorClient.Models
 {
-    public class TeleParameter: ViewModelBase
+    public class TeleConstraint: TrackedProperty
     {
         private string _name;
         private int _value;
@@ -17,8 +17,9 @@ namespace SimulatorClient.Models
         public int Value { get => _value; set => SetProperty(ref _value, value); }
         public TeleComparison Comparison { get => _comparison; set => SetProperty(ref _comparison, value); }
         public bool ConditionActive { get => _conditionActive; set => SetProperty(ref _conditionActive, value); }
-        public TeleParameter()
+        public TeleConstraint()
         {
+            Name = "Parameter Name";
             this._conditionActive = false;
         }
 
